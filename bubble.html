@@ -1,0 +1,148 @@
+
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+    <meta charset="utf-8">
+    <title>Social Media Viz Demo</title>
+
+    <!-- load D3 library -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+
+    <style>
+
+ text {
+    font-family: sans-serif;
+ }
+
+ .bar {
+     stroke: white;
+     stroke-width: 2px;
+     fill: blue;
+ }
+
+ .value {
+     font-weight: bold;
+     font-size: 16px;
+     fill: blue;
+ }
+
+ .label {
+     font-size: 20px;
+ }
+
+ .title {
+     font-weight: bold;
+     font-size: 20px;
+     fill: black;
+ }
+
+
+    </style>
+
+  </head>
+
+  <body>
+
+    <svg id="viz" height="500" width="800" style="border: 1px solid grey;">
+    </svg>
+
+    <div>
+      <button id="button_2013">2013</button>
+      <button id="button_2014">2014</button>
+    </div>
+
+    <script>
+
+
+
+window.addEventListener("load",run);
+
+
+/*
+ * Demo: social media 2013-2014 data
+ *
+ * Version charting two years
+ * Year selection via buttons
+ * Using D3
+ *
+ */
+
+
+function run () {
+var site="all";
+    var category = "gender";
+	
+
+    // setup button events
+
+    button_2013.addEventListener("click",function() { updateScatterView(category,site); });
+    //button_2014.addEventListener("click",function() { updateView(category,site); });
+
+    initializeView (category,site);
+}
+
+
+
+function getDataRows (category) {
+    var data = [
+	
+	//{ site:"Tumblr", category:"race", "White Non-Hispanic":9,"Black Non-Hispanic": 15,"Hispanic": 15},
+
+	{ site:"Tumblr", category:"race", group:"White, Non-Hispanic", value:9},
+	{ site:"Tumblr", category:"race", group:"Black, Non-Hispanic", value:15},
+	{ site:"Tumblr", category:"race", group:"Hispanic", value:15},
+	
+	{ site:"Pinterest", category:"race", group:"White, Non-Hispanic", value:32},
+	{ site:"Pinterest", category:"race", group:"Black, Non-Hispanic", value:23},
+	{ site:"Pinterest", category:"race", group:"Hispanic", value:32},
+	
+	{ site:"LinkedIn", category:"race", group:"White, Non-Hispanic", value:26},
+	{ site:"LinkedIn", category:"race", group:"Black, Non-Hispanic", value:22},
+	{ site:"LinkedIn", category:"race", group:"Hispanic", value:22},
+	
+	{ site:"Facebook", category:"race", group:"White, Non-Hispanic", value:70},
+	{ site:"Facebook", category:"race", group:"Black, Non-Hispanic", value:67},
+	{ site:"Facebook", category:"race", group:"Hispanic", value:75},
+	
+	{ site:"Instagram", category:"race", group:"White, Non-Hispanic", value:21},
+	{ site:"Instagram", category:"race", group:"Black, Non-Hispanic", value:47},
+	{ site:"Instagram", category:"race", group:"Hispanic", value:38},
+	
+	
+	
+	
+	
+	{ site:"Tumblr", category:"gender", maleValue:10, femaleValue: 11},
+	
+	{ site:"Pinterest", category:"gender", maleValue:16, femaleValue: 44},
+	
+	{ site:"LinkedIn", category:"gender", maleValue:26, femaleValue: 25},
+	
+	{ site:"Facebook", category:"gender", maleValue:66, femaleValue: 77},
+	
+	{ site:"Instagram", category:"gender", maleValue:24, femaleValue: 31}
+
+/*
+	{ category:"age", group:"18-29", year:2013, value:84},
+
+	{ category:"age", group:"30-49", year:2013, value:79},
+
+	{ category:"age", group:"50-64", year:2013, value:60},
+
+	{ category:"age", group:"65+", year:2013, value:45},
+*/
+    ];
+	
+    return data.filter(function(row) {
+	return (row.category===category) ; });
+}
+
+    </script>
+
+  </body>
+
+</html>

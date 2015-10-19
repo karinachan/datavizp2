@@ -1,0 +1,555 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+    <meta charset="utf-8">
+    <title>Social Media Viz Demo</title>
+
+    <!-- load D3 library -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+
+    <style>
+
+div.tooltip {
+  position: absolute; 
+  text-align: center; 
+  width: 60px;  
+  height: 28px;   
+  padding: 2px; 
+  font: 12px sans-serif;  
+  background: lightsteelblue; 
+  border: 0px;          
+  border-radius: 8px;
+
+}
+
+
+ text {
+    font-family: sans-serif;
+ }
+
+ .bar {
+     stroke: white;
+     stroke-width: 2px;
+     fill: blue;
+ }
+
+ .value {
+     font-weight: bold;
+     font-size: 16px;
+     fill: blue;
+ }
+
+ .label {
+     font-size: 20px;
+ }
+
+ .title {
+     font-weight: bold;
+     font-size: 20px;
+     fill: black;
+ }
+
+
+    </style>
+
+  </head>
+
+  <body>
+
+    <svg id="viz" height="500" width="1000" style="border: 1px solid grey;">
+    </svg>
+
+    <div>
+      <button id="bar_race_all">Race breakdown (all)</button>
+      <button id="bar_age_all">Age breakdown (all)</button>
+         <button id="bar_edu_all">Education breakdown (all)</button>
+            <button id="bar_income_all">Income breakdown (all)</button>
+               <button id="bar_loc_all">Location-Type breakdown (all)</button>
+    <button id="scatter_start">Gender breakdown (all)</button>
+<br>
+       <button id="bar_race_tumblr">Race breakdown (Tumblr)</button>
+          <button id="bar_race_linked">Race breakdown (LinkedIn)</button>
+             <button id="bar_race_insta">Race breakdown (Instagram)</button>
+                <button id="bar_race_fb">Race breakdown (Facebook)</button>
+                      <button id="bar_race_pin">Race breakdown (Pinterest)</button>
+<br>
+
+                         <button id="bar_age_tumblr">Age breakdown (Tumblr)</button>
+          <button id="bar_age_linked">Age breakdown (LinkedIn)</button>
+             <button id="bar_age_insta">Age breakdown (Instagram)</button>
+                <button id="bar_age_fb">Age breakdown (Facebook)</button>
+                      <button id="bar_age_pin">Age breakdown (Pinterest)</button>
+<br>
+                      <button id="bar_gender_tumblr">Gender breakdown (Tumblr)</button>
+          <button id="bar_gender_linked">Gender breakdown (LinkedIn)</button>
+             <button id="bar_gender_insta">Gender breakdown (Instagram)</button>
+                <button id="bar_gender_fb">Gender breakdown (Facebook)</button>
+                      <button id="bar_gender_pin">Gender breakdown (Pinterest)</button>
+<br>
+
+                        <button id="bar_income_tumblr">Income breakdown (Tumblr)</button>
+          <button id="bar_income_linked">Income breakdown (LinkedIn)</button>
+             <button id="bar_income_insta">Income breakdown (Instagram)</button>
+                <button id="bar_income_fb">Income breakdown (Facebook)</button>
+                      <button id="bar_income_pin">Income breakdown (Pinterest)</button>
+<br>
+                      <button id="bar_education_tumblr">Education breakdown (Tumblr)</button>
+          <button id="bar_education_linked">Education breakdown (LinkedIn)</button>
+             <button id="bar_education_insta">Education breakdown (Instagram)</button>
+                <button id="bar_education_fb">Education breakdown (Facebook)</button>
+                      <button id="bar_education_pin">Education breakdown (Pinterest)</button>
+<br>
+                      <button id="bar_location_tumblr">Location breakdown (Tumblr)</button>
+          <button id="bar_location_linked">Location breakdown (LinkedIn)</button>
+             <button id="bar_location_insta">Location breakdown (Instagram)</button>
+                <button id="bar_location_fb">Location breakdown (Facebook)</button>
+                      <button id="bar_location_pin">Location breakdown (Pinterest)</button>
+                      <button id="grouped_race_all">Grouped Race (all)</button>
+   
+    </div>
+
+
+
+    <script>
+
+
+
+window.addEventListener("load",run);
+
+
+/*
+ * Demo: social media 2013-2014 data
+ *
+ * Version charting two years
+ * Year selection via buttons
+ * Using D3
+ *
+ */
+
+
+function run () {
+ //for type 2
+  var vis = d3.select("#viz");
+
+  grouped_race_all.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      groupedBar("race","all");
+  })
+bar_gender_pin.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("gender2","Pinterest");
+});
+
+
+bar_gender_fb.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("gender2","Facebook");
+});
+
+bar_gender_insta.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("gender2","Instagram");
+});
+
+bar_gender_tumblr.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("gender2","Tumblr");
+});
+
+bar_gender_linked.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("gender2","LinkedIn");
+});
+
+
+bar_location_pin.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("location-type","Pinterest");
+});
+
+bar_location_fb.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("location-type","Facebook");
+});
+
+
+bar_location_insta.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("location-type","Instagram");
+});
+
+bar_location_tumblr.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("location-type","Tumblr");
+});
+
+bar_location_linked.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("location-type","LinkedIn");
+});
+
+
+
+
+bar_education_fb.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("education","Facebook");
+});
+
+
+
+bar_education_tumblr.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("education","Tumblr");
+});
+
+
+bar_education_pin.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("education","Pinterest");
+});
+
+
+bar_education_linked.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("education","LinkedIn");
+});
+
+
+bar_education_insta.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("education","Instagram");
+});
+
+
+
+
+
+
+
+bar_income_fb.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("income","Facebook");
+});
+
+bar_income_insta.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("income","Instagram");
+});
+
+bar_income_pin.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("income","Pinterest");
+});
+
+bar_income_linked.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("income","LinkedIn");
+});
+
+bar_income_tumblr.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("income","Tumblr");
+});
+
+bar_income_all.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateStackBarView("income","all",4);
+});
+
+
+
+bar_edu_all.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateStackBarView("education","all",3);
+});
+
+bar_loc_all.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateStackBarView("location-type","all",3);
+});
+
+
+bar_age_all.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateStackBarView("age","all",4);
+});
+
+bar_age_pin.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("age","Pinterest");
+});
+
+
+bar_age_fb.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("age","Facebook");
+});
+
+
+bar_age_insta.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("age","Instagram");
+});
+
+
+
+bar_age_linked.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("age","LinkedIn");
+});
+
+
+
+bar_age_tumblr.addEventListener("click",function(){
+
+  d3.selectAll("svg > *").remove();
+      updateBarView("age","Tumblr");
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  bar_race_tumblr.addEventListener("click",function() { 
+            //Draw the Rectangle
+  
+  d3.selectAll("svg > *").remove();
+      updateBarView("race","Tumblr"); });
+
+
+    bar_race_fb.addEventListener("click",function() { 
+            //Draw the Rectangle
+  
+  d3.selectAll("svg > *").remove();
+      updateBarView("race","Facebook"); });
+
+      bar_race_pin.addEventListener("click",function() { 
+            //Draw the Rectangle
+  
+  d3.selectAll("svg > *").remove();
+      updateBarView("race","Pinterest"); });
+
+        bar_race_insta.addEventListener("click",function() { 
+            //Draw the Rectangle
+  
+  d3.selectAll("svg > *").remove();
+      updateBarView("race","Instagram"); });
+
+          bar_race_linked.addEventListener("click",function() { 
+            //Draw the Rectangle
+  
+  d3.selectAll("svg > *").remove();
+      updateBarView("race","LinkedIn"); });
+
+
+
+    bar_race_all.addEventListener("click",function() { 
+            //Draw the Rectangle
+  
+  d3.selectAll("svg > *").remove();
+      updateStackBarView("race","all",3); });
+
+
+
+
+
+    scatter_start.addEventListener("click",function(){
+         //Draw the Rectangle
+ 
+  d3.selectAll("svg > *").remove();
+      updateScatterView()});
+
+
+
+}
+
+
+
+/* From
+   http://www.pewinternet.org/files/2015/01/PI_SocialMediaUpdate20144.pdf
+*/
+
+
+function getDataRows (category, site) {
+    var data = [
+	
+	//{ site:"Tumblr", category:"race", "White Non-Hispanic":9,"Black Non-Hispanic": 15,"Hispanic": 15},
+
+	{ site:"Tumblr", category:"race", group:"White, Non-Hispanic", value:9},
+	{ site:"Tumblr", category:"race", group:"Black, Non-Hispanic", value:15},
+	{ site:"Tumblr", category:"race", group:"Hispanic", value:15},
+	{ site:"Pinterest", category:"race", group:"White, Non-Hispanic", value:32},
+	{ site:"Pinterest", category:"race", group:"Black, Non-Hispanic", value:23},
+	{ site:"Pinterest", category:"race", group:"Hispanic", value:32},
+	{ site:"LinkedIn", category:"race", group:"White, Non-Hispanic", value:26},
+	{ site:"LinkedIn", category:"race", group:"Black, Non-Hispanic", value:22},
+	{ site:"LinkedIn", category:"race", group:"Hispanic", value:22},
+	{ site:"Facebook", category:"race", group:"White, Non-Hispanic", value:70},
+	{ site:"Facebook", category:"race", group:"Black, Non-Hispanic", value:67},
+	{ site:"Facebook", category:"race", group:"Hispanic", value:75},
+	{ site:"Instagram", category:"race", group:"White, Non-Hispanic", value:21},
+	{ site:"Instagram", category:"race", group:"Black, Non-Hispanic", value:47},
+	{ site:"Instagram", category:"race", group:"Hispanic", value:38},
+  //transplanting this together
+  { site:"Tumblr", category:"gender2", group:"male", value:10},
+  {site:"Tumblr", category:"gender2", group:"female",value: 11},
+
+ { site:"Pinterest", category:"gender2", group:"male", value:16},
+  {site:"Pinterest", category:"gender2", group:"female",value: 44},
+   { site:"Instagram", category:"gender2", group:"male", value:24},
+  {site:"Instagram", category:"gender2", group:"female",value: 31},
+   { site:"Facebook", category:"gender2", group:"male", value:66},
+  {site:"Facebook", category:"gender2", group:"female",value: 77},
+   { site:"LinkedIn", category:"gender2", group:"male", value:26},
+  {site:"LinkedIn", category:"gender2", group:"female",value: 25},
+
+
+  { site:"Tumblr", category:"gender", maleValue:10, femaleValue:11},
+  { site:"Pinterest", category:"gender", maleValue:16, femaleValue: 44},
+  { site:"LinkedIn", category:"gender", maleValue:26, femaleValue: 25},
+  { site:"Facebook", category:"gender", maleValue:66, femaleValue: 77},
+  { site:"Instagram", category:"gender", maleValue:24, femaleValue: 31},
+
+  { site: "Tumblr", category:"age", group:"18-29", value:20},
+                { site: "Tumblr", category:"age", group:"30-49", value:11},
+                { site: "Tumblr", category:"age", group:"50-64", value:5},
+                { site: "Tumblr", category:"age", group:"65+", value:2},
+                { site: "Pinterest", category:"age", group:"18-29", value:37},
+                { site: "Pinterest", category:"age", group:"30-49", value:36},
+                { site: "Pinterest", category:"age", group:"50-64", value:24},
+                { site: "Pinterest", category:"age", group:"65+", value:16},
+                { site: "LinkedIn", category:"age", group:"18-29", value:22},
+                { site: "LinkedIn", category:"age", group:"30-49", value:32},
+                { site: "LinkedIn", category:"age", group:"50-64", value:26},
+                { site: "LinkedIn", category:"age", group:"65+", value:12},
+                { site: "Facebook", category:"age", group:"18-29", value:82},
+                { site: "Facebook", category:"age", group:"30-49", value:79},
+                { site: "Facebook", category:"age", group:"50-64", value:64},
+                { site: "Facebook", category:"age", group:"65+", value:48},
+                { site: "Instagram", category:"age", group:"18-29", value:20},
+                { site: "Instagram", category:"age", group:"30-49", value:11},
+                { site: "Instagram", category:"age", group:"50-64", value:5},
+                { site: "Instagram", category:"age", group:"65+", value:2},
+               
+                { site:"Tumblr", category:"education", group:"High school grad or less", value:10},
+                { site:"Tumblr", category:"education", group:"Some college", value:13},
+                { site:"Tumblr", category:"education", group:"College+", value:9},
+                { site:"Pinterest", category:"education", group:"High school grad or less", value:25},
+                { site:"Pinterest", category:"education", group:"Some college", value:37},
+                { site:"Pinterest", category:"education", group:"College+", value:31},
+                { site:"LinkedIn", category:"education", group:"High school grad or less", value:9},
+                { site:"LinkedIn", category:"education", group:"Some college", value:25},
+                { site:"LinkedIn", category:"education", group:"College+", value:46},
+                { site:"Facebook", category:"education", group:"High school grad or less", value:71},
+                { site:"Facebook", category:"education", group:"Some college", value:72},
+                { site:"Facebook", category:"education", group:"College+", value:72},
+                { site:"Instagram", category:"education", group:"High school grad or less", value:25},
+                { site:"Instagram", category:"education", group:"Some college", value:32},
+                { site:"Instagram", category:"education", group:"College+", value:26},
+               
+                { site:"Tumblr", category:"income", group:"Less than $30,000/yr", value:16},
+                { site:"Tumblr", category:"income", group:"$30,000-$49,999", value:8},
+                { site:"Tumblr", category:"income", group:"$50,000-$74,999", value:4},
+                { site:"Tumblr", category:"income", group:"$75,000+", value:11},
+                { site:"Pinterest", category:"income", group:"Less than $30,000/yr", value:24},
+                { site:"Pinterest", category:"income", group:"$30,000-$49,999", value:37},
+                { site:"Pinterest", category:"income", group:"$50,000-$74,999", value:41},
+                { site:"Pinterest", category:"income", group:"$75,000+", value:30},
+                { site:"LinkedIn", category:"income", group:"Less than $30,000/yr", value:17},
+                { site:"LinkedIn", category:"income", group:"$30,000-$49,999", value:21},
+                { site:"LinkedIn", category:"income", group:"$50,000-$74,999", value:32},
+                { site:"LinkedIn", category:"income", group:"$75,000+", value:41},
+                { site:"Facebook", category:"income", group:"Less than $30,000/yr", value:73},
+                { site:"Facebook", category:"income", group:"$30,000-$49,999", value:72},
+                { site:"Facebook", category:"income", group:"$50,000-$74,999", value:66},
+                { site:"Facebook", category:"income", group:"$75,000+", value:78},
+                { site:"Instagram", category:"income", group:"Less than $30,000/yr", value:26},
+                { site:"Instagram", category:"income", group:"$30,000-$49,999", value:27},
+                { site:"Instagram", category:"income", group:"$50,000-$74,999", value:30},
+                { site:"Instagram", category:"income", group:"$75,000+", value:26},
+               
+                { site:"Tumblr", category:"location-type", group:"Urban", value:16},
+                { site:"Tumblr", category:"location-type", group:"Suburban", value:8},
+                { site:"Tumblr", category:"location-type", group:"Rural", value:3},
+                { site:"Pinterest", category:"location-type", group:"Urban", value:26},
+                { site:"Pinterest", category:"location-type", group:"Suburban", value:34},
+                { site:"Pinterest", category:"location-type", group:"Rural", value:31},
+                { site:"LinkedIn", category:"location-type", group:"Urban", value:30},
+                { site:"LinkedIn", category:"location-type", group:"Suburban", value:26},
+                { site:"LinkedIn", category:"location-type", group:"Rural", value:12},
+                { site:"Facebook", category:"location-type", group:"Urban", value:74},
+                { site:"Facebook", category:"location-type", group:"Suburban", value:72},
+                { site:"Facebook", category:"location-type", group:"Rural", value:67},
+                { site:"Instagram", category:"location-type", group:"Urban", value:32},
+                { site:"Instagram", category:"location-type", group:"Suburban", value:28},
+                { site:"Instagram", category:"location-type", group:"Rural", value:18}
+
+    ];
+
+    return data.filter(function(row) {
+      if (site==="all"){
+	return (row.category===category) ; } else {
+    return (row.category===category && row.site===site);
+  }
+
+});
+}
+
+    </script>
+<script src="bar.js"></script>
+<script src="scatter.js"></script>
+  </body>
+
+</html>
