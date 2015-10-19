@@ -136,13 +136,14 @@
             <li>    <a id="bar_edu_all" href="#bottom">Education breakdown</a>
             <li>      <a id="bar_income_all" href="#bottom">Income breakdown</a>
             <li>        <a id="bar_loc_all" href="#bottom">Location-Type breakdown</a>
-            <li>   <a id="scatter_start" href="#bottom">Gender breakdown</a>
-            <li>  <a id="grouped_race_all" href="#bottom">Race breakdown (grouped)</a>
+            <li>   <a id="scatter_start" href="#bottom">Gender breakdown</a> 
+           <!-- <li>  <a id="grouped_race_all" href="#bottom">Race breakdown (grouped)</a>-->
           </ul>
         </div>
         </div>
     </div>
     <div class="container">
+      <h1><div id="label"></div></h1>
     <svg id="viz" height="500" width="1000" style="border: 1px white;">
       <div id="bottom"></div>
     </svg>
@@ -160,10 +161,11 @@
     function run () {
     //for type 2
     var vis = d3.select("#viz");
+    /*
     grouped_race_all.addEventListener("click",function(){
     d3.selectAll("svg > *").remove();
     groupedBar("race","all");
-    })
+    }) */
     bar_gender_pin.addEventListener("click",function(){
     d3.selectAll("svg > *").remove();
     updateBarView("gender2","Pinterest");
@@ -314,7 +316,7 @@
     //Draw the Rectangle
     
     d3.selectAll("svg > *").remove();
-    updateScatterView()});
+    updateScatterView("gender","all")});
     }
     /* From
     http://www.pewinternet.org/files/2015/01/PI_SocialMediaUpdate20144.pdf

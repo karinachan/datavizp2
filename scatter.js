@@ -82,7 +82,7 @@ for (i=0; i<data.length; i++){
 function updateScatterView (category,site) {
 
 
-
+  document.getElementById("label").innerHTML = category+" breakdown for "+site;
     var category = "gender";
 	 var site = "all"
    var type= "scatter";

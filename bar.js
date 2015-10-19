@@ -1,7 +1,7 @@
 
 function initializeBarView (category,site,n, data) {
      
-    
+    document.getElementById("label").innerHTML = category+" breakdown for "+site;
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
@@ -145,7 +145,7 @@ site.selectAll("rect")
 
 
 function updateStackBarView (category, site,n) {
-
+  document.getElementById("label").innerHTML = category+" breakdown for "+site;
     // setup button events
     var data = getDataRows(category, site);
     
@@ -186,6 +186,7 @@ initializeBarView(category,site,n, data);
 }
 
 function updateBarView(category, site,  n){
+    document.getElementById("label").innerHTML = category+" breakdown for "+site;
      var data = getDataRows(category, site);
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
@@ -243,7 +244,8 @@ data.forEach(function(d) {
       .attr("x", function(d) { return x(d.group); })
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.value); })
-      .attr("height", function(d) { return height - y(d.value); });
+      .attr("height", function(d) { return height - y(d.value); })
+      .style("fill",'#'+Math.random().toString(16).substr(-6));
 });
 
 function type(d) {
@@ -254,7 +256,8 @@ function type(d) {
 }
 
 
-function groupedBar(category, site){
+
+//function groupedBar(category, site){
 
 
 //  var margin = {top: 20, right: 20, bottom: 30, left: 40},
@@ -382,6 +385,9 @@ function groupedBar(category, site){
 //       .attr("dy", ".35em")
 //       .style("text-anchor", "end")
 //       .text(function(d) { return d; });
+
+/* in progress, will look at again tomorrow morning
+function groupedBar(category, site){
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
@@ -478,4 +484,4 @@ var data = getDataRows(category,site);
       .text(function(d) { return d; });
 
 
-}
+} */
